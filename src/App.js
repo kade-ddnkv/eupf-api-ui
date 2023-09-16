@@ -92,13 +92,11 @@ const RightAnswer = styled(Box)({
 })
 
 const UpfLeftText = styled(Box)({
-  // fontSize: '1.2rem',
   fontWeight: 600,
   textAlign: 'right',
 })
 
 const UpfRightAnswer = styled(Box)({
-  // fontSize: '1.2rem',
   fontWeight: 600,
 })
 
@@ -108,6 +106,9 @@ const ChartTitle = styled(Box)({
   marginBottom: 20,
   marginLeft: 15,
 })
+
+
+// Thin line parameters.
 
 const lineWidth = 4
 
@@ -142,6 +143,8 @@ const SmoothArrow = styled(Box)({
   zIndex: -1,
 })
 
+
+// N3 N6 charts options (Chart.js).
 const options = {
   responsive: true,
   plugins: {
@@ -170,22 +173,21 @@ const options = {
       }
     },
     y: {
-      // offset: true,
       border: {
         display: false
       },
       ticks: {
-        // autoSkipPadding: 90
         maxTicksLimit: 4
       },
       grid: {
-        // display: false,
+        // To show Y=0 axis.
         lineWidth: (context) => (context.tick.value === 0 ? 1 : 0)
       }
     }
   }
 };
 
+// Also charts options.
 const constructGraphData = (labelTop, labelBottom, dataTop, dataBottom) => {
   return {
     datasets: [
@@ -211,19 +213,21 @@ const constructGraphData = (labelTop, labelBottom, dataTop, dataBottom) => {
   }
 }
 
+// Empty chart initialization (Y=0 line with correct timestamps).
 const getEmptyChartMeasurementsArray = () => {
   const currTime = Date.now()
   const arrayLength = 21
   return [...Array(arrayLength).keys()].map((i) => { return { x: currTime - i * updateTime, y: 0 } }).reverse()
 }
 
-// Change to 1 sec.
+// Better to change to 1 sec.
 const updateTime = 2000
 
 function App() {
-  const apiPort = window.env.API_PORT
+  const apiPort = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_API_PORT : window.env.API_PORT
   const { height, width } = useWindowDimensions();
 
+  // Trackers to maintain responsive design.
   const enoughHeight = height >= 1000
   const enoughtWidth = width >= 1450
 
@@ -275,6 +279,7 @@ function App() {
   return (
     <div className="">
       <Box sx={{ display: 'flex', fontFamily: 'Inter' }}>
+        {/* Left navbar */}
         <Box sx={{ bgcolor: 'white', width: 100, height: height, mr: enoughtWidth ? '-100px' : '0px' }}>
           <Stack spacing={2} p={2}>
             <Typography fontFamily='Inter' fontWeight={900} py={1}>simsoul</Typography>
@@ -283,6 +288,7 @@ function App() {
             <NavBarItem>trblsh</NavBarItem>
           </Stack>
         </Box>
+        {/* Main container */}
         <Container sx={{
           display: 'flex', height: '92.3354vh',
           justifyContent: enoughHeight ? 'center' : 'start', 
@@ -292,7 +298,6 @@ function App() {
           <BaseBox sx={{ width: 230, height: 110, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
             <LeftText sx={{ mr: 1 }}>Connected<br />SMF-s</LeftText>
             <LeftText sx={{ mr: 3 }}>:</LeftText>
-            {/* color: '#acafb3', */}
             <RightAnswer>{pfcpAssociations ? Object.keys(pfcpAssociations).length : ''}</RightAnswer>
             <SmoothArrow sx={{ left: 230 / 2 - smoothArrowWidth / 2, bottom: - smoothArrowWidth / 2 + 5 }} />
           </BaseBox>
@@ -324,7 +329,6 @@ function App() {
             </Box>
             <Box sx={{ width: 100, ml: 4 }}></Box>
             <Box sx={{ width: 150, ml: 4 }}>
-              {/* <BaseBox sx={{ width: 50, height: 50 }}></BaseBox> */}
               <MediumBox sx={{ width: 150, height: 50 }}>DN-s</MediumBox>
             </Box>
           </Box>
@@ -349,8 +353,7 @@ function App() {
                   : ''
               }</RightAnswer>
             </BaseBox>
-            {/* height earlier was equal to 350 */}
-            <BaseBox sx={{ width: 370, height: 210, ml: '93px', mr: 'calc(93px + 230px)' }}>
+            <BaseBox sx={{ width: 370, height: 210, ml: 70 + 'px', mr: 70 + 230 + 'px' }}>
               <SmoothArrow sx={{ left: 370 / 2 - smoothArrowWidth / 2, top: - smoothArrowWidth / 2 + 5 }} />
               <Box sx={{ width: '100%', color: '#acafb3', fontWeight: 700, mt: 3, display: 'flex', justifyContent: 'center' }}>UPF system info</Box>
               <Box sx={{
