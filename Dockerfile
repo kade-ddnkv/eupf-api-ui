@@ -3,14 +3,14 @@ ENV NODE_ENV production
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
-RUN npm install --production
+RUN npm install --omit=dev
 COPY . .
+ARG REACT_APP_HOST_API_PORT
+ENV REACT_APP_HOST_API_PORT=$REACT_APP_HOST_API_PORT
 RUN npm run build
 
 FROM nginx:1.24.0 AS production
 ENV NODE_ENV production
-ARG REACT_APP_HOST_API_PORT
-ENV REACT_APP_HOST_API_PORT=$REACT_APP_HOST_API_PORT
 COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
