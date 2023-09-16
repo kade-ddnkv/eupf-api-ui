@@ -5,8 +5,6 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install --omit=dev
 COPY . .
-ARG REACT_APP_HOST_API_PORT
-ENV REACT_APP_HOST_API_PORT=$REACT_APP_HOST_API_PORT
 RUN npm run build
 
 FROM nginx:1.24.0 AS production

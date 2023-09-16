@@ -221,7 +221,7 @@ const getEmptyChartMeasurementsArray = () => {
 const updateTime = 2000
 
 function App() {
-  const apiPort = process.env.REACT_APP_HOST_API_PORT
+  const apiPort = window.env.API_PORT
   const { height, width } = useWindowDimensions();
 
   const enoughHeight = height >= 1000
