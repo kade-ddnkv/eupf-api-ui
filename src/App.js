@@ -285,6 +285,9 @@ const updateTime = 2000
 const localPort = 8080
 
 function App() {
+  const apiPort = process.env.API_PORT;
+  console.log(apiPort)
+
   const { height, width } = useWindowDimensions();
 
   const enoughHeight = height >= 1000
@@ -329,7 +332,6 @@ function App() {
   }, [time])
 
   useEffect(() => {
-    console.log(process.env.API_PORT)
     const interval = setInterval(() => setTime(Date), updateTime)
     return () => {
       clearInterval(interval)
