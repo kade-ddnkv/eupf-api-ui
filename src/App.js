@@ -221,6 +221,7 @@ const getEmptyChartMeasurementsArray = () => {
 const updateTime = 2000
 
 function App() {
+  const apiPort = process.env.REACT_APP_HOST_API_PORT
   const { height, width } = useWindowDimensions();
 
   const enoughHeight = height >= 1000
@@ -236,17 +237,17 @@ function App() {
 
   // Executes every <updateTime> milliseconds.
   useEffect(() => {
-    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/config')
+    fetch('http://localhost:' + apiPort + '/api/v1/config')
       .then(response => response.json())
       .then(json => setConfig(json))
       .catch(error => console.error(error));
 
-    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/pfcp_associations/full')
+    fetch('http://localhost:' + apiPort + '/api/v1/pfcp_associations/full')
       .then(response => response.json())
       .then(json => setPfcpAssociations(json))
       .catch(error => console.error(error));
 
-    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/xdp_stats')
+    fetch('http://localhost:' + apiPort + '/api/v1/xdp_stats')
       .then(response => response.json())
       .then(json => {
         setXdpStats(
