@@ -34,12 +34,7 @@ const myActiveGreen = '#b6ffa8'
 
 const BaseBox = styled(Box)({
   flexShrink: 0,
-  // borderRadius: 15,
   borderRadius: 25,
-  // border: '1px solid',
-  // borderColor: '#7ebfc7',
-  // boxShadow: '0px 1px 6px 0px rgba(194, 224, 255, 1), 0px 2px 30px 0px rgba(234, 237, 241, 0.3) inset',
-  // backgroundColor: '#f3fcfd'
   backgroundColor: 'white',
   position: 'relative',
 })
@@ -58,9 +53,7 @@ const SmallBox = styled(BaseBox)({
   justifyContent: 'center',
   alignItems: 'center',
   borderRadius: 8,
-  // color: myGrey,
   backgroundColor: 'white',
-  // backgroundColor: '#b6ffa8',
   WebkitTransition: 'background-color 200ms linear',
   msTransition: 'background-color 200ms linear',
   transition: 'background-color 200ms linear',
@@ -169,11 +162,8 @@ const options = {
         display: false
       },
       ticks: {
-        // autoSkipPadding: 90
-        // padding: 20,
         maxTicksLimit: 4,
         minRotation: 30,
-        // includeBounds: true
       },
       grid: {
         display: false
@@ -194,59 +184,6 @@ const options = {
       }
     }
   }
-};
-
-const labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,];
-
-const data1 = {
-  datasets: [
-    {
-      // fill: true,
-      label: "N3 uplink",
-      // data: labels.map(() => Math.floor(Math.random() * 1000)),
-      data: labels.map((i) => { return { x: Date.now() + i, y: i <= 10 ? 0 : Math.floor(Math.random() * 1000) } }),
-      borderColor: "black",
-      backgroundColor: "rgba(3, 138, 255, 1)",
-      pointBackgroundColor: 'black',
-      pointStyle: false,
-      borderWidth: 2,
-      // borderJoinStyle: "round",
-      tension: 0.3
-    },
-    {
-      // fill: true,
-      label: "N3 downlink",
-      // data: labels.map(() => Math.floor(Math.random() * -500)),
-      data: labels.map((i) => { return { x: Date.now() + i, y: i <= 10 ? 0 : Math.floor(Math.random() * -500) } }),
-      borderColor: "grey",
-      backgroundColor: "rgba(252, 214, 112, 1)",
-      pointStyle: false,
-      borderWidth: 2,
-      // borderJoinStyle: "round",
-      tension: 0.3
-    }
-  ]
-};
-
-const data2 = {
-  datasets: [
-    {
-      label: "N6 uplink",
-      data: labels.map((i) => { return { x: Date.now() + i, y: i <= 10 ? 0 : Math.floor(Math.random() * 1000) } }),
-      borderColor: "black",
-      pointStyle: false,
-      borderWidth: 2,
-      tension: 0.3
-    },
-    {
-      label: "N6 downlink",
-      data: labels.map((i) => { return { x: Date.now() + i, y: i <= 10 ? 0 : Math.floor(Math.random() * -500) } }),
-      borderColor: "grey",
-      pointStyle: false,
-      borderWidth: 2,
-      tension: 0.3
-    }
-  ]
 };
 
 const constructGraphData = (labelTop, labelBottom, dataTop, dataBottom) => {
@@ -280,14 +217,10 @@ const getEmptyChartMeasurementsArray = () => {
   return [...Array(arrayLength).keys()].map((i) => { return { x: currTime - i * updateTime, y: 0 } }).reverse()
 }
 
+// Change to 1 sec.
 const updateTime = 2000
 
-const localPort = 8080
-
 function App() {
-  const apiPort = process.env.API_PORT;
-  console.log(apiPort)
-
   const { height, width } = useWindowDimensions();
 
   const enoughHeight = height >= 1000
@@ -303,17 +236,17 @@ function App() {
 
   // Executes every <updateTime> milliseconds.
   useEffect(() => {
-    fetch('http://localhost:' + localPort + '/api/v1/config')
+    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/config')
       .then(response => response.json())
       .then(json => setConfig(json))
       .catch(error => console.error(error));
 
-    fetch('http://localhost:' + localPort + '/api/v1/pfcp_associations/full')
+    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/pfcp_associations/full')
       .then(response => response.json())
       .then(json => setPfcpAssociations(json))
       .catch(error => console.error(error));
 
-    fetch('http://localhost:' + localPort + '/api/v1/xdp_stats')
+    fetch('http://localhost:' + process.env.API_PORT + '/api/v1/xdp_stats')
       .then(response => response.json())
       .then(json => {
         setXdpStats(
