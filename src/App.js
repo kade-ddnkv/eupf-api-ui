@@ -329,6 +329,7 @@ function App() {
   }, [time])
 
   useEffect(() => {
+    console.log(process.env.API_PORT)
     const interval = setInterval(() => setTime(Date), updateTime)
     return () => {
       clearInterval(interval)
@@ -413,23 +414,23 @@ function App() {
               }</RightAnswer>
             </BaseBox>
             {/* height earlier was equal to 350 */}
-            <BaseBox sx={{ width: 330, height: 210, ml: '93px', mr: 'calc(93px + 230px)' }}>
-              <SmoothArrow sx={{ left: 330 / 2 - smoothArrowWidth / 2, top: - smoothArrowWidth / 2 + 5 }} />
+            <BaseBox sx={{ width: 370, height: 210, ml: '93px', mr: 'calc(93px + 230px)' }}>
+              <SmoothArrow sx={{ left: 370 / 2 - smoothArrowWidth / 2, top: - smoothArrowWidth / 2 + 5 }} />
               <Box sx={{ width: '100%', color: '#acafb3', fontWeight: 700, mt: 3, display: 'flex', justifyContent: 'center' }}>UPF system info</Box>
               <Box sx={{
                 mt: 2,
                 display: 'grid',
                 gap: 1,
-                gridTemplateColumns: 'repeat(9, 1fr)',
+                gridTemplateColumns: 'repeat(2, 1fr)',
               }}>
-                <UpfLeftText gridColumn='span 5'>Api address:</UpfLeftText>
-                <UpfRightAnswer gridColumn='span 4'>{config?.ApiAddress}</UpfRightAnswer>
-                <UpfLeftText gridColumn='span 5'>PFCP address:</UpfLeftText>
-                <UpfRightAnswer gridColumn='span 4'>{config?.PfcpAddress}</UpfRightAnswer>
-                <UpfLeftText gridColumn='span 5'>PFCP node id:</UpfLeftText>
-                <UpfRightAnswer gridColumn='span 4'>{config?.PfcpNodeId}</UpfRightAnswer>
-                <UpfLeftText gridColumn='span 5'>Metrics address:</UpfLeftText>
-                <UpfRightAnswer gridColumn='span 4'>{config?.MetricsAddress}</UpfRightAnswer>
+                <UpfLeftText gridColumn='span 1'>Api address:</UpfLeftText>
+                <UpfRightAnswer gridColumn='span 1'>{config?.ApiAddress}</UpfRightAnswer>
+                <UpfLeftText gridColumn='span 1'>PFCP address:</UpfLeftText>
+                <UpfRightAnswer gridColumn='span 1'>{config?.PfcpAddress}</UpfRightAnswer>
+                <UpfLeftText gridColumn='span 1'>PFCP node id:</UpfLeftText>
+                <UpfRightAnswer gridColumn='span 1'>{config?.PfcpNodeId}</UpfRightAnswer>
+                <UpfLeftText gridColumn='span 1'>Metrics address:</UpfLeftText>
+                <UpfRightAnswer gridColumn='span 1'>{config?.MetricsAddress}</UpfRightAnswer>
               </Box>
               <Box sx={{ position: 'absolute', bottom: 0, right: 0, mr: 2.5, mb: 1.5 }}>more &gt;</Box>
             </BaseBox>
